@@ -1,5 +1,72 @@
 package observatory
 
+/**
+
+
+        SourceShape
+      Outlet[String]                   FlowShape[String, Station]            
+ ╔══════════════════════╗                ╔══════════════════════╗                
+ ║                      ║                ║                      ║                
+ ║                      ║                ║                      ║                
+ ║                      ╠──┐          ┌──╣                      ║         
+ ║  Source              │  │────────▶|   │   linesToStations    ║ 
+ ║     .fromIterator()  ╠──┘          └──╣                      ║ 
+ ║                      ║                ║                      ║  
+ ║                      ║                ║                      ║   
+ ║                      ║                ║                      ║   
+ ╚══════════════════════╝                ╚═════════╗   ╔════════╝   
+                                                   ╚ | ╝                                                       
+                                                     |
+                                                     |
+                                                     ↓                                                        
+                                                   ╔   ╗ UniformFanOutShape[Station, Station]                                                      
+                                         ╔═════════║   ║══════════╗                                                               
+                                         ║                        ║                                               
+                                         ║                        ║                                              
+                                         ║   Partitioner.         ║                                              
+                                         ║  stationToOutputPort   ║                                              
+                                         ║                        ║
+                                         ║                        ║                                              
+                                         ║                        ║                                              
+                                         ║                        ║
+                                         ╚══════════╗   ╔═════════╝   
+                                                    ╚ | ╝                                                       
+            |─────────────────────────────────────────|──────────────────────────────────────────────────|
+            |                                         |                                                  |
+            |                                         |                                                  |      
+            |                                         |                                                  |
+          ╔ ↓ ╗ Inlet[Station]                      ╔ ↓ ╗ Inlet[Station]                               ╔ ↓ ╗ Inlet[Station]   
+╔═════════║   ║══════════╗                ╔═════════║   ║══════════╗                         ╔═════════║   ║══════════╗                                                     
+║                        ║                ║                        ║                         ║                        ║                         
+║                        ║                ║                        ║                         ║                        ║                        
+║     Sink.              ║                ║      Sink.             ║                         ║     Sink.              ║                        
+║       Seq[Station]     ║                ║        Seq[Station]    ║                         ║       Seq[Station]     ║                        
+║                        ║                ║                        ║                         ║                        ║   
+║                        ║                ║                        ║                         ║                        ║                        
+║                        ║                ║                        ║                         ║                        ║                        
+║                        ║                ║                        ║                         ║                        ║   
+╚════════════════════════╝                ╚════════════════════════╝                         ╚════════════════════════╝
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                                                     
+  */
+
+
+
+
 import scala.io.Source._
 import akka.stream._
 import akka.stream.scaladsl._
