@@ -8,9 +8,9 @@ package observatory
  ╔══════════════════════╗                ╔══════════════════════╗                
  ║                      ║                ║                      ║                
  ║                      ║                ║                      ║                
- ║                      ╠──┐          ┌──╣                      ║         
- ║  Source              │  │────────▶|   │   linesToStations    ║ 
- ║     .fromIterator()  ╠──┘          └──╣                      ║ 
+ ║  Stations            ╠──┐          ┌──╣                      ║         
+ ║     .fromIterator()      ────────▶        linesToStations    ║ 
+ ║                      ╠──┘          └──╣                      ║ 
  ║                      ║                ║                      ║  
  ║                      ║                ║                      ║   
  ║                      ║                ║                      ║   
