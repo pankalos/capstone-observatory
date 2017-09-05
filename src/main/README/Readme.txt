@@ -8,3 +8,5 @@ into the directory “observatory/src/main/resources”, so that all the .csv fi
 *Please delete first all the files from resources dir, e.g: the sample 1975.csv 
 See also the instructions in this folder (.png images) for more details about the general description.
 
+*Initial assignment can be Downloaded here:
+http://alaska.epfl.ch/~dockermoocs/capstone/observatory.zip
