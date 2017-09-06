@@ -2,6 +2,8 @@ package observatory
 
 /**
 
+stations_graph :
+
 
         SourceShape
       Outlet[String]                   FlowShape[String, Station]            
@@ -18,8 +20,8 @@ package observatory
                                                    ╚ | ╝                                                       
                                                      |
                                                      |
-                                                     ↓                                                        
-                                                   ╔   ╗ UniformFanOutShape[Station, Station]                                                      
+                                                     |                                                        
+                                                   ╔ ↓ ╗ UniformFanOutShape[Station, Station]                                                      
                                          ╔═════════║   ║══════════╗                                                               
                                          ║                        ║                                               
                                          ║                        ║                                              
@@ -53,18 +55,87 @@ Stn_Id_Only |                                         | Wban_Id_Only            
             |                                         |                                                  |
             ↓                                         ↓                                                  ↓
      HashMap[Int, Station]                     HashMap[Int, Station]                              HashMap[Int, Station]
+
+val stnIdMap: HashMap[Int, Station]          val wbanIdMap: HashMap[Int, Station]               val stnAndWbanIdMap: HashMap[Int, Station]                              
                                             
                                             
                                             
+======================================================================================================================================================================================================================
+======================================================================================================================================================================================================================   
                                             
                                             
                                             
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                                                     
+temperature_graph :
+
+
+        SourceShape
+      Outlet[String]                   FlowShape[String, TemperatureRecord]            
+ ╔══════════════════════╗                ╔══════════════════════╗                
+ ║                      ║                ║                      ║                
+ ║                      ║                ║                      ║                
+ ║  ####.CSV            ╠──┐          ┌──╣                      ║         
+ ║     .fromIterator()      ────────▶      linesToTemperatures  ║ 
+ ║                      ╠──┘          └──╣                      ║ 
+ ║                      ║                ║                      ║  
+ ║                      ║                ║                      ║   
+ ║                      ║                ║                      ║   
+ ╚══════════════════════╝                ╚═════════╗   ╔════════╝   
+                                                   ╚ | ╝                                                       
+                                                     |
+                                                     |
+                                                     |                                                        
+                                                   ╔ ↓ ╗ UniformFanOutShape[TemperatureRecord, TemperatureRecord]                                                      
+                                         ╔═════════║   ║══════════╗                                                               
+                                         ║                        ║                                               
+                                         ║                        ║                                              
+                                         ║   Partitioner.         ║                                              
+                                         ║temperatureRecToOutPort ║                                              
+                                         ║                        ║
+                                         ║                        ║                                              
+                                         ║                        ║                                              
+                                         ║                        ║
+                                         ╚══════════╗   ╔═════════╝   
+                                                    ╚ | ╝
+                                                      |
+                                                      |
+TmpRecStnIdOnly                                       |              
+            |─────────────────────────────────────────|────|──────────────────────────────────────────────────|───────────────────────────────────────────────────|
+            |                                              | TmpRecWbanIdOnly                                 | TmpRecStnAndWbanId                                | TmpRecErroneous
+            |                                              |                                                  |                                                   |
+            |                                              |                                                  |                                                   |
+            |                                              |                                                  |                                                   |
+          ╔ ↓ ╗ FlowShape[TemperatureRecord, Triplet]    ╔ ↓ ╗ FlowShape[TemperatureRecord, Triplet]        ╔ ↓ ╗ FlowShape[TemperatureRecord, Triplet]         ╔ ↓ ╗ FlowShape[TemperatureRecord, Triplet] 
+╔═════════║   ║══════════╗                     ╔═════════║   ║══════════╗                         ╔═════════║   ║══════════╗                          ╔═════════║   ║══════════╗                              
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║tmpRecGroupWithStations ║                     ║tmpRecGroupWithStations ║                         ║tmpRecGroupWithStations ║                          ║tmpRecGroupWithStations ║
+║    (stnIdMap)          ║                     ║   (wbanIdMap)          ║                         ║   (StnAndWbanIdMap)    ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+╚═══════════|════════════╝                     ╚═══════════|════════════╝                         ╚═══════════|════════════╝                          ╚═══════════|════════════╝
+            |                                              |                                                  |                                                   |
+            |                                              |                                                  |                                                   |
+            |                                              |                                                  |                                                   | 
+          ╔ ↓ ╗ Inlet[Triplet]                           ╔ ↓ ╗ Inlet[Triplet]                               ╔ ↓ ╗ Inlet[Triplet]                                ╔ ↓ ╗ Inlet[Triplet] 
+╔═════════║   ║══════════╗                     ╔═════════║   ║══════════╗                         ╔═════════║   ║══════════╗                          ╔═════════║   ║══════════╗                              
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║   Sink.                ║                     ║   Sink.                ║                         ║   Sink.                ║                          ║   Sink.                ║
+║      Seq[Triplet]      ║                     ║      Seq[Triplet]      ║                         ║      Seq[Triplet]      ║                          ║      Seq[Triplet]      ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+║                        ║                     ║                        ║                         ║                        ║                          ║                        ║
+╚═══════════|════════════╝                     ╚═══════════|════════════╝                         ╚═══════════|════════════╝                          ╚═══════════|════════════╝
+            |                                              |                                                  |                                                   |
+            |                                              |                                                  |                                                   |
+            ↓                                              ↓                                                  ↓                                                   ↓ 
+      Seq[Triplet]                                    Seq[Triplet]                                        Seq[Triplet]                                        Seq[Triplet]
+                                           
+
+
   */
 
 
