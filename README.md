@@ -8,9 +8,10 @@ Source code and Diagrams can be found here:
 
 capstone-observatory5/src/main/scala/observatory/
 
-Please Note that i have only finished the 1st milestone, so only the:
+Please Note that i am on the 2nd milestone, so only the:
 
-Extraction.scala 
+Extraction.scala
+Visualization.scala
 
-is ready for review.
+are ready for review.
 More coming soon...
