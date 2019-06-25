@@ -1,4 +1,4 @@
-# capstone-observatory5
+# capstone-observatory
 
 Please refer to :
 capstone-observatory5/src/main/README/   
