@@ -10,8 +10,10 @@ capstone-observatory5/src/main/scala/observatory/
 
 Please Note that i am on the 2nd milestone, so only the:
 
-Extraction.scala
-Visualization.scala
+[Extraction](src/main/scala/observatory/Extraction.scala) (Akka Streams)
+
+
+[Visualization](src/main/scala/observatory/Visualization.scala)
 
 are ready for review.
 More coming soon...
