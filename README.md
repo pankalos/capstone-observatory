@@ -1,12 +1,8 @@
 # capstone-observatory
 
-Please refer to [ReadMe](src/main/README)
+Please refer to [ReadMe](src/main/README) for more Information about the project.
 
-for more Information about the project.
-
-Source code and Diagrams can be found here:
-
-capstone-observatory5/src/main/scala/observatory/
+Source code and Diagrams can be found [here](src/main/scala/observatory)
 
 Please Note that i am on the 2nd milestone, so only the:
 
