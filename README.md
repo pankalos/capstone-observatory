@@ -1,7 +1,7 @@
 # capstone-observatory
 
-Please refer to :
-capstone-observatory5/src/main/README/   
+Please refer to [ReadMe](src/main/README)
+
 for more Information about the project.
 
 Source code and Diagrams can be found here:
